@@ -40,24 +40,21 @@ const showMovieData = (data)=>{
     movieContainer.appendChild(moviePosterElement);
     movieContainer.appendChild(movieElement);
 };
-// http://www.omdbapi.com/?apikey=${myAPIKey}&t=$jawan
-//fucntio to fetch movie detail usin api 
-const getMovieInfo= async (movie)=>{
-    try{
-        const myAPIKey = `833b8a9f`;
-        const url= `http://www.omdbapi.com/?apikey=${myAPIKey}&t=${movie}`;
-        const response= await fetch(url);
-        if(!response.ok){
+
+const getMovieInfo = async (movie) => {
+    try {
+        const url = `/api/getMovieInfo?movie=${movie}`;  // Call the Netlify serverless function
+        const response = await fetch(url);
+        if (!response.ok) {
             throw new Error("Unable to fetch Movie Data");
         }
         const data = await response.json();
-        console.log(data);
-        showMovieData(data);
-    }catch(error){
-        showErrorMessage("No Movie Found!!!")
+        showMovieData(data);  // Display movie data
+    } catch (error) {
+        showErrorMessage("No Movie Found!!!");
     }
+};
 
-}
 
 // function to display error message
 
@@ -77,8 +74,10 @@ const handleFormSubmmission =(e)=>{
         showErrorMessage("Fetching Movie Information...")
         getMovieInfo(movieName);
     }else{
+        
         movieContainer.innerHTML=`<h2>Enter movie name to get movie info</h2>`
         movieContainer.classList.add(no-background)
+        
     }
 }
 
