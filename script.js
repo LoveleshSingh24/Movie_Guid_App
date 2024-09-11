@@ -40,21 +40,24 @@ const showMovieData = (data)=>{
     movieContainer.appendChild(moviePosterElement);
     movieContainer.appendChild(movieElement);
 };
-
-const getMovieInfo = async (movie) => {
-    try {
-        const url = `/api/getMovieInfo?movie=${movie}`;  // Call the Netlify serverless function
-        const response = await fetch(url);
-        if (!response.ok) {
+// http://www.omdbapi.com/?apikey=${myAPIKey}&t=$jawan
+//fucntio to fetch movie detail usin api 
+const getMovieInfo= async (movie)=>{
+    try{
+        const myAPIKey = `833b8a9f`;
+        const url= `http://www.omdbapi.com/?apikey=${myAPIKey}&t=${movie}`;
+        const response= await fetch(url);
+        if(!response.ok){
             throw new Error("Unable to fetch Movie Data");
         }
         const data = await response.json();
-        showMovieData(data);  // Display movie data
-    } catch (error) {
-        showErrorMessage("No Movie Found!!!");
+        console.log(data);
+        showMovieData(data);
+    }catch(error){
+        showErrorMessage("No Movie Found!!!")
     }
-};
 
+}
 
 // function to display error message
 
