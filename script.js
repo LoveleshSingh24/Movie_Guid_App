@@ -43,7 +43,7 @@ const getMovieInfo = async (movie) => {
         // Use the actual URL of your deployed Netlify site
         const baseUrl = window.location.hostname === 'localhost' 
             ? '/api/getMovieInfo' 
-            : `https://movie-guid-app.netlify.app/api/getMovieInfo`;
+            : `https://movie-guid-app-lovelesh.netlify.app/api/getMovieInfo`;
 
         const url = `${baseUrl}?movie=${movie}`;
         const response = await fetch(url);
