@@ -1,23 +1,22 @@
-const fetch = require('node-fetch');
-
-exports.handler = async (event, context) => {
-    const movie = event.queryStringParameters.movie;  // Get the movie name from query params
-    const apiKey = process.env.OMDB_API_KEY;          // Fetch API key from environment variables
+exports.handler = async (event) => {
+    const fetch = await import('node-fetch').then(mod => mod.default);
+    const movie = event.queryStringParameters.movie;
+    const apiKey = process.env.OMDB_API_KEY;
 
     const url = `http://www.omdbapi.com/?apikey=${apiKey}&t=${movie}`;
 
     try {
-        const response = await fetch(url);            // Fetch data from OMDb API
-        const data = await response.json();           // Parse response data
-
+        const response = await fetch(url);
+        const data = await response.json();
         return {
             statusCode: 200,
-            body: JSON.stringify(data),               // Return movie data
+            body: JSON.stringify(data),
         };
     } catch (error) {
+        console.error('Error fetching movie data:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Unable to fetch movie data' }), // Handle errors
+            body: JSON.stringify({ error: 'Unable to fetch movie data' }),
         };
     }
 };
